@@ -1,13 +1,10 @@
+const test = 5123123;
+console.log('test: ', test);
+alert("Hello world!");
 
-try {
-  document.addEventListener('click', (event) => {
-    event.preventDefault()
-    console.log('click')
-  })
-} catch (error) {
-  console.log(error)
-}
-
-// eslint-disable-next-line no-unused-vars
-const test = 5123123
-console.log('test: ', test)
+     title,
+     screens,
+     screenPrice,
+     rollback,
+     fullPrice,
+     adaptive 
