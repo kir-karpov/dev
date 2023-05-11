@@ -1,8 +1,8 @@
 `use strict`;
-let title 
+let title
 let screens
-let screenPrice 
-let adaptive 
+let screenPrice
+let adaptive
 let allServicePrices
 let rollback = 10
 let fullPrice
@@ -12,20 +12,20 @@ let service2
 
 const isNumber = function (num) {
   return !isNaN(parseFloat(num)) && isFinite(num)
-  }
+}
 
 const asking = function () {
   title = prompt("Как называется ваш проект?")
   screens = prompt("Какие типы экранов нужно разработать?")
 
- 
-  do { 
-    screenPrice = prompt("Сколько будет стоить данная работа?")
-  } while (isNaN(screenPrice)){
 
-     adaptive = confirm("Нужен ли адаптив на сайте?")
-}
- }
+  do {
+    screenPrice = prompt("Сколько будет стоить данная работа?")
+  } while (isNaN(screenPrice))
+
+  adaptive = confirm("Нужен ли адаптив на сайте?")
+
+};
 
 const showTypeof = function (variable) {
   console.log(variable, typeof variable);
@@ -41,11 +41,11 @@ function getAllServicePrices() {
       service2 = prompt("Какой дополнительный тип услуги нужен?")
     }
 
-do {
-  sum = +prompt("Сколько это будет стоить?")
-} while (isNaN(sum));    
+    do {
+      sum = +prompt("Сколько это будет стоить?")
+    } while (isNaN(sum));
   }
-  
+
 }
 
 const getFullPrice = function () {
@@ -72,7 +72,7 @@ const getRollbackMessage = function (price) {
   }
 }
 
-asking() 
+asking()
 allServicePrices = getAllServicePrices()
 fullPrice = getFullPrice()
 servicePercentPrice = getServicePercentPrice()
