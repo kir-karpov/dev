@@ -21,11 +21,10 @@ const asking = function () {
  
   do { 
     screenPrice = prompt("Сколько будет стоить данная работа?")
-  } while (isNaN(screenPrice)) {
+  } while (isNaN(screenPrice)){
 
-  }     
      adaptive = confirm("Нужен ли адаптив на сайте?")
-  
+}
  }
 
 const showTypeof = function (variable) {
