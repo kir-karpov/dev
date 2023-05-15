@@ -23,16 +23,11 @@ const appData = {
     this.logger();
   },
   logger: function () {
-    console.log(`Информация о текущем объекте:`, this.title);
-    console.log(`Информация о текущем объекте:`, this.screens);
-    console.log(`Информация о текущем объекте:`, this.screenPrice);
-    console.log(`Информация о текущем объекте:`, this.adaptive);
-    console.log(`Информация о текущем объекте:`, this.allServicePrices);
-    console.log(`Информация о текущем объекте:`, this.rollback);
-    console.log(`Информация о текущем объекте:`, this.fullPrice);
-    console.log(`Информация о текущем объекте:`, this.servicePercentPrice);
-    console.log(`Информация о текущем объекте:`, this.service1);
-    console.log(`Информация о текущем объекте:`, this.service2);
+    for (const key in this) {
+      if (typeof this[key] !== "function") {
+        console.log(`Информация о  объекте: ${key} - ${this[key]}`);
+      }
+    }
   },
 };
 
