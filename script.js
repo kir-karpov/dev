@@ -20,7 +20,7 @@ const totalCountRollback = document.getElementsByClassName("total-input")[4];
 
 let screenBlocks = document.querySelectorAll(".screen");
 
-
+ const valueSpan = document.querySelector(".rollback .range-value");
 
 const appData = {
   title: "",
@@ -34,19 +34,15 @@ const appData = {
   servicePercentPrice: 0,
   servicesPercent: {},
   servicesNumber: {},
-  isError: false, 
+  isError: false,
 
   validateScreenData: function () {
-    appData.isError = false; 
+    appData.isError = false;
     screenBlocks = document.querySelectorAll(".screen");
 
     screenBlocks.forEach((screen) => {
       const select = screen.querySelector(`select`);
       const input = screen.querySelector(`input`);
-
-      console.dir(select);
-      console.log(select.value);
-      console.log(input.value);
 
       if (select.value === "" || input.value === "") {
         appData.isError = true;
@@ -59,7 +55,6 @@ const appData = {
     appData.validateScreenData();
 
     if (!appData.isError) {
-      console.log(appData);
       appData.start();
     } else {
       console.log(
@@ -73,6 +68,18 @@ const appData = {
 
     calculateBtn.addEventListener("click", appData.calculateButtonClick);
     plusBtn.addEventListener("click", appData.addScreenBlock);
+
+    rangeInput.addEventListener("input", function () {
+      const value = rangeInput.value;
+
+      valueSpan.textContent = value + "%";
+
+      appData.rollback = value;
+
+      appData.start();
+
+      console.log("Значение в свойстве rollback:", appData.rollback);
+    });
   },
   addTitle: function () {
     document.title = title.textContent;
@@ -90,10 +97,11 @@ const appData = {
 
   showResult: function () {
     total.value = appData.screenPrice;
-    totalCountOther.value =
-      appData.servicePricesPercent + appData.servicePricesNumber;
-    fulltotalCount.value = appData.fullPrice;
-    alert("showResult");
+    totalCountOther.value = (
+      appData.servicePricesPercent + appData.servicePricesNumber
+    ).toString();
+    document.getElementById("total-count").value = appData.screens.length;
+    totalCountRollback.value = appData.getRollbackMessage(appData.fullPrice);
   },
 
   addScreens: function () {
@@ -102,15 +110,28 @@ const appData = {
       const select = screen.querySelector("select");
       const input = screen.querySelector("input");
       const selectName = select.options[select.selectedIndex].textContent;
+      const count = +input.value;
 
       appData.screens.push({
         id: index,
         name: selectName,
-        price: +select.value * +input.value,
+        price: +select.value * count,
+        count: count,
       });
     });
+
+    let totalCount = 0;
+    for (let screen of appData.screens) {
+      totalCount += screen.count;
+    }
+
+    appData.count = totalCount; // Добавление свойства "count" в appData
+
+    document.getElementById("total-count").value = totalCount;
+
     console.log(appData.screens);
   },
+
   addServices: function () {
     otherItemsPercent.forEach(function (item) {
       const check = item.querySelector("input[type=checkbox]");
@@ -147,9 +168,25 @@ const appData = {
   },
 
   addPrices: function () {
+    let totalPrice = 0;
     for (let screen of appData.screens) {
-      appData.screenPrice += +screen.price;
+      totalPrice = screen.price;
     }
+
+  
+    let totalCount = appData.count; // Получение общего количества экранов из свойства "count" в appData
+    document.getElementById("total-count").value = totalCount;
+
+    let totalScreenCount = 0; // Перемещение объявления за пределы цикла
+    for (let screen of appData.screens) {
+      totalScreenCount += screen.count;
+    }
+
+    for (let screen of appData.screens) {
+      appData.screenPrice += screen.price; // Удаление унарного плюса перед screen.price
+    }
+
+    // Остальной код остается неизменным
 
     for (let key in appData.servicesNumber) {
       appData.servicePricesNumber += appData.servicesNumber[key];
@@ -188,5 +225,7 @@ const appData = {
     console.log(appData.screens);
   },
 };
+
+
 
 appData.init();
